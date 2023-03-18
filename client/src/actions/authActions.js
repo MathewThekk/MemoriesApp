@@ -21,7 +21,7 @@ export const signUp = (formData, history) => async (dispatch) => {
   try {
     const { data } = await api.signUp(formData);
     console.log(data);
-    const action = { type: AUTH, payload: data };
+    const action = { type: AUTH, data };
     dispatch(action);
     history.push("/");
   } catch (error) {
@@ -33,7 +33,7 @@ export const signIn = (formData, history) => async (dispatch) => {
       const { data, status } = await api.signIn(formData);
   
       if (status === 200) {
-        const action = { type: AUTH, payload: data };
+        const action = { type: AUTH, data };
         dispatch(action);
         history.push("/");
       } else {

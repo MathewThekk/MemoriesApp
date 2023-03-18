@@ -10,6 +10,7 @@ import { getPosts } from '../../actions/postsActions';
 const Home = () => {
     const allposts = useSelector((state)=> state.posts)
   const [currentId, setCurrentId] = useState(0);
+  
   const dispatch = useDispatch();    
   const classes = useStyles();
 
