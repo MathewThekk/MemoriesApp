@@ -18,7 +18,6 @@ export const createPost = (postData) => async (dispatch) => {
     try {
 
         const { data } = await api.createPost(postData)
-        console.log(data)
 
 
         const action = { type: CREATE_POST, payload: data }
@@ -54,7 +53,10 @@ export const deletePost = (id) => async (dispatch) => {
 }
 export const likePost = (id) => async (dispatch) => {
     try {
+        console.log(1, id)
        const {data} = await api.likePost(id)
+       console.log(2, data)
+
         const action = { type: LIKE_POST, payload: data }
         dispatch(action)
     }
