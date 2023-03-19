@@ -14,6 +14,18 @@ export const getPosts = () => async (dispatch) => {
 
     }
 }
+export const getPostsBySearch = (searchQuery) => async (dispatch) => {
+    try {
+console.log(searchQuery)
+       const {data : {data}} = await api.fetchPostsBySearch(searchQuery)
+       console.log(data)
+        // const action = { type: GET_POST_BY_SEARCH, payload: data }
+        // dispatch(action)
+    }
+    catch (error) {
+        console.log(error)
+    }
+}
 export const createPost = (postData) => async (dispatch) => {
     try {
 
@@ -53,9 +65,9 @@ export const deletePost = (id) => async (dispatch) => {
 }
 export const likePost = (id) => async (dispatch) => {
     try {
-        console.log(1, id)
+
        const {data} = await api.likePost(id)
-       console.log(2, data)
+
 
         const action = { type: LIKE_POST, payload: data }
         dispatch(action)

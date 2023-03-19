@@ -9,6 +9,23 @@ export const getPosts = async (req, res) => {
     res.status(404).json({ message: error.message });
   }
 };
+export const getPostsBySearch = async (req, res) => {
+
+const {searchquery, tags} = req.query
+
+  try {
+console.log(1, searchquery)
+    const title = new RegExp(searchquery, "i");
+    console.log(title)
+
+    const posts = await PostMessage.find({ $or: [{ title: title }, { tags: {$in: tags.split(',') } }] });
+
+    res.json({data:posts});
+    
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
 export const createPost = async (req, res) => {
   const newPost = new PostMessage({ ...req.body, creator: req.userId, createdAt: new Date().toISOString() });
   console.log(newPost);

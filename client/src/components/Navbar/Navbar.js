@@ -4,12 +4,14 @@ import { AppBar, Avatar, Typography, Toolbar, Button } from "@material-ui/core";
 import useStyles from "./navbarStyles";
 import { useDispatch } from "react-redux";
 import memories from "../../images/memories.png";
-import { logout } from "../../actions/authActions";
+import decode from 'jwt-decode';
+import * as actionType from "../../constants/actionTypeConstants";
 
 const Navbar = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const location = useLocation();
+  const history = useHistory();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
   const appBarRef = useRef(null);
 
@@ -19,10 +21,21 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    console.log(user)
+const token = user?.token
+if(token) {
+  const decodedToken = decode(token);
+  if (decodedToken.exp * 1000 < Date.now()) logout(); 
 
     setUser(JSON.parse(localStorage.getItem("profile")));
-  }, [location]);
+}}, [location]);
+
+const logout = () => {
+  dispatch({ type: actionType.LOGOUT });
+
+  history.push('/auth');
+
+  setUser(null);
+};
 
   return (
     <AppBar className={classes.appBar} position="static" color="inherit">

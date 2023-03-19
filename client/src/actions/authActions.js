@@ -9,14 +9,7 @@ export const auth = (user) => (dispatch) => {
     console.log(error);
   }
 };
-export const logout = (user) => (dispatch) => {
-  try {
-    const action = { type: LOGOUT, payload: user };
-    dispatch(action);
-  } catch (error) {
-    console.log(error);
-  }
-};
+
 export const signUp = (formData, history) => async (dispatch) => {
   try {
     const { data } = await api.signUp(formData);
