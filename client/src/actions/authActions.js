@@ -1,4 +1,4 @@
-import { AUTH, LOGOUT, SIGNIN, SIGNUP } from "../constants/actionTypeConstants";
+import { AUTH } from "../constants/actionTypeConstants";
 import * as api from "../api/api.js";
 
 export const auth = (user) => (dispatch) => {

@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Container, Grow, Grid, AppBar, TextField, Button, Paper } from '@material-ui/core';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import ChipInput from 'material-ui-chip-input';
 
 import { getPostsBySearch} from '../../actions/postsActions'
 import Posts from '../Posts/Posts';
 import Form from '../Form/Form';
-// import Pagination from '../Pagination';
+import Pagination from '../Pagination'
 import useStyles from './homeStyles';
-import { getPosts } from '../../actions/postsActions';
+
 
 function useQuery() {
   return new URLSearchParams(useLocation().search);
@@ -23,22 +23,14 @@ const Home = () => {
   const page = query.get('page') || 1;
   const searchQuery = query.get('searchQuery');
 
-    const allposts = useSelector((state)=> state.posts)
   const [currentId, setCurrentId] = useState(0);
-  
-
-  useEffect(()=> {
-
-    dispatch(getPosts())
-  
-  },[currentId, dispatch, allposts.length])
   
   const [search, setSearch] = useState('');
   const [tags, setTags] = useState([]);
   const history = useHistory();
 
   const searchPost = () => {
-    console.log(2, tags)
+
     if (search.trim() || tags) {
       dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
       history.push(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
@@ -80,7 +72,7 @@ const Home = () => {
             <Form currentId={currentId} setCurrentId={setCurrentId} />
             {(!searchQuery && !tags.length) && (
               <Paper className={classes.pagination} elevation={6}>
-                {/* <Pagination page={page} /> */}
+                <Pagination page={page} />
               </Paper>
             )}
           </Grid>

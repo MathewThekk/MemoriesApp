@@ -8,16 +8,16 @@ import { createPost, updatePost } from '../../actions/postsActions';
 
 const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({  title: '', message: '', tags: '', selectedFile: '' });
-  const post = useSelector((state) => (currentId ? state.posts.find((p) => p._id === currentId) : null));
+  const post = useSelector((state) => (currentId ? state.posts.posts.find((p) => p._id === currentId) : null));
   const userStatus = useSelector((state) => (state.auth.authData));
   const dispatch = useDispatch();
   const classes = useStyles();
-  const user = JSON.parse(localStorage.getItem('profile'));
+  let user = JSON.parse(localStorage.getItem('profile'));
 
   useEffect(() => {
     console.log(userStatus)
     if (post) setPostData(post);
-    const user = JSON.parse(localStorage.getItem('profile'));
+
   }, [post, userStatus]);
 
   const clear = () => {

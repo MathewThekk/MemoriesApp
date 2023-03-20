@@ -1,11 +1,25 @@
 import * as api from '../api/api.js'
-import { CREATE_POST, FETCH_ALL,UPDATE_POST,DELETE_POST, LIKE_POST  } from "../constants/actionTypeConstants";
+import { CREATE_POST, FETCH_POSTS_BY_PAGE,FETCH_POSTS_BY_SEARCH, UPDATE_POST,DELETE_POST, LIKE_POST  } from "../constants/actionTypeConstants";
 
 
-export const getPosts = () => async (dispatch) => {
+// export const getPosts = () => async (dispatch) => {
+//     try {
+//         const { data } = await api.fetchPost()
+//         const action = { type: FETCH_ALL, payload: data }
+//         dispatch(action)
+
+//     } catch (error) {
+//         console.log(error)
+
+
+//     }
+// }
+export const getPostsByPage = (page) => async (dispatch) => {
     try {
-        const { data } = await api.fetchPost()
-        const action = { type: FETCH_ALL, payload: data }
+        console.log('action page',page)
+        const { data } = await api.fetchPostsByPage(page)
+        console.log(data)
+        const action = { type: FETCH_POSTS_BY_PAGE, payload: data }
         dispatch(action)
 
     } catch (error) {
@@ -16,11 +30,11 @@ export const getPosts = () => async (dispatch) => {
 }
 export const getPostsBySearch = (searchQuery) => async (dispatch) => {
     try {
-console.log(searchQuery)
+
        const {data : {data}} = await api.fetchPostsBySearch(searchQuery)
-       console.log(data)
-        // const action = { type: GET_POST_BY_SEARCH, payload: data }
-        // dispatch(action)
+
+        const action = { type: FETCH_POSTS_BY_SEARCH, payload: data }
+        dispatch(action)
     }
     catch (error) {
         console.log(error)
