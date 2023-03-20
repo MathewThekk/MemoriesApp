@@ -1,3 +1,5 @@
+export const START_LOADING = 'START_LOADING'; 
+export const FINISHED_LOADING = 'FINISHED_LOADING'; 
 export const CREATE_POST = 'CREATE_POST' 
 export const UPDATE_POST = 'UPDATE_POST' 
 export const DELETE_POST = 'DELETE_POST' 
