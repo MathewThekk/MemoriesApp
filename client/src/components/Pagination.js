@@ -18,9 +18,7 @@ const Paginate = ({ page }) => {
       dispatch(getPostsByPage(page));
     }
   }, [dispatch, page]);
-
-  console.log(1);
-  
+    
   return (
     <Pagination
       classes={{ ul: classes.ul }}

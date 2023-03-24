@@ -9,16 +9,13 @@ import memoriesLogo from "../../images/memoriesLogo.png";
 import memoriesText from "../../images/memoriesText.png";
 
 const Navbar = () => {
+  console.log(1)
   const classes = useStyles();
   const dispatch = useDispatch();
   const location = useLocation();
   const history = useHistory();
   const [user, setUser] = useState(JSON.parse(localStorage.getItem("profile")));
 
-  const handleLogout = () => {
-    dispatch(logout());
-    setUser(null);
-  };
 
   useEffect(() => {
     const token = user?.token;
@@ -28,7 +25,7 @@ const Navbar = () => {
 
       setUser(JSON.parse(localStorage.getItem("profile")));
     }
-  }, [location]);
+  }, [location, dispatch]);
 
   const logout = () => {
     dispatch({ type: actionType.LOGOUT });
@@ -53,7 +50,7 @@ const Navbar = () => {
             <Typography className={classes.userName} variant="h6">
               {user.result?.name}
             </Typography>
-            <Button variant="contained" className={classes.logout} color="secondary" onClick={handleLogout}>
+            <Button variant="contained" className={classes.logout} color="secondary" onClick={logout}>
               Logout
             </Button>
           </div>

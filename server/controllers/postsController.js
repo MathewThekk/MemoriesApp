@@ -10,33 +10,39 @@ import PostMessage from "../models/postMessage.js";
 //   }
 // };
 
+export const getPost = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const post = await PostMessage.findById(id);
+    res.status(200).json({ post });
+  } catch (error) {
+    res.status(404).json({ message: error.message });
+  }
+};
 export const getPostsByPage = async (req, res) => {
   try {
     const { page } = req.query;
-    const limit = 5
-    const startIndex = (Number(page) - 1) * limit;  //get the starting index of every page
+    const limit = 5;
+    const startIndex = (Number(page) - 1) * limit; //get the starting index of every page
     const totalPosts = await PostMessage.countDocuments();
-    const post = await PostMessage.find().sort({_id:-1}).limit(limit).skip(startIndex);
+    const post = await PostMessage.find().sort({ _id: -1 }).limit(limit).skip(startIndex);
     const numberOfPages = Math.ceil(totalPosts / limit);
-    res.status(200).json({data: post, currentPage: page, numberOfPages: numberOfPages});
+    res.status(200).json({ data: post, currentPage: page, numberOfPages: numberOfPages });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
 };
 
 export const getPostsBySearch = async (req, res) => {
-
-const {searchquery, tags} = req.query
+  const { searchquery, tags } = req.query;
 
   try {
-console.log(1, searchquery)
     const title = new RegExp(searchquery, "i");
-    console.log(title)
+    console.log(title);
 
-    const posts = await PostMessage.find({ $or: [{ title: title }, { tags: {$in: tags.split(',') } }] });
+    const posts = await PostMessage.find({ $or: [{ title: title }, { tags: { $in: tags.split(",") } }] });
 
-    res.json({data:posts});
-    
+    res.json({ data: posts });
   } catch (error) {
     res.status(404).json({ message: error.message });
   }
@@ -84,10 +90,9 @@ export const likePost = async (req, res) => {
     post.likes.push(req.userId);
   } else {
     post.likes = post.likes.filter((id) => id !== String(req.userId));
-
   }
-console.log(post)
+  console.log(post);
   const updatedPost = await PostMessage.findByIdAndUpdate(_id, post, { new: true });
-console.log(updatedPost)
+  console.log(updatedPost);
   res.json(updatedPost);
 };
