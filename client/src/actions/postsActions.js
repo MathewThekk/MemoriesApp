@@ -40,7 +40,6 @@ export const getPostsByPage = (page) => async (dispatch) => {
 export const getPostsBySearch = (searchQuery) => async (dispatch) => {
   try {
     dispatch({ type: START_LOADING });
-    console.log('action')
     const { data: { data } } = await api.fetchPostsBySearch(searchQuery);
     console.log(data);
 

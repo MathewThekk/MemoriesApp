@@ -38,9 +38,9 @@ export const getPostsBySearch = async (req, res) => {
 
   try {
     const title = new RegExp(searchquery, "i");
-    console.log(title);
 
     const posts = await PostMessage.find({ $or: [{ title: title }, { tags: { $in: tags.split(",") } }] });
+    console.log(1, posts);
 
     res.json({ data: posts });
   } catch (error) {

@@ -9,7 +9,7 @@ import memoriesLogo from "../../images/memoriesLogo.png";
 import memoriesText from "../../images/memoriesText.png";
 
 const Navbar = () => {
-  console.log(1)
+
   const classes = useStyles();
   const dispatch = useDispatch();
   const location = useLocation();
