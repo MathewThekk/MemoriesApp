@@ -40,7 +40,6 @@ export const getPostsBySearch = async (req, res) => {
     const title = new RegExp(searchquery, "i");
 
     const posts = await PostMessage.find({ $or: [{ title: title }, { tags: { $in: tags.split(",") } }] });
-    console.log(1, posts);
 
     res.json({ data: posts });
   } catch (error) {
@@ -93,6 +92,19 @@ export const likePost = async (req, res) => {
   }
   console.log(post);
   const updatedPost = await PostMessage.findByIdAndUpdate(_id, post, { new: true });
+  console.log(updatedPost);
+  res.json(updatedPost);
+};
+
+export const commentPost = async (req, res) => {
+  const { id} = req.params;
+  const {comment} = req.body;
+  if (!req.userId) return res.json({ message: "User not authenticated" });
+  if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send("No post with that Id");
+  const post = await PostMessage.findById(id);
+  post.comments.push(comment);
+
+  const updatedPost = await PostMessage.findByIdAndUpdate(id, post, { new: true });
   console.log(updatedPost);
   res.json(updatedPost);
 };

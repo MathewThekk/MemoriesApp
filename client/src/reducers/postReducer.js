@@ -1,4 +1,4 @@
-import { CREATE_POST, UPDATE_POST, DELETE_POST, LIKE_POST, FETCH_POSTS_BY_SEARCH, FETCH_POSTS_BY_PAGE, START_LOADING, FINISHED_LOADING, FETCH_POST } from "../constants/actionTypeConstants";
+import { CREATE_POST, UPDATE_POST, DELETE_POST, LIKE_POST, FETCH_POSTS_BY_SEARCH, FETCH_POSTS_BY_PAGE, START_LOADING, FINISHED_LOADING, FETCH_POST, COMMENT } from "../constants/actionTypeConstants";
 
 export const postReducer = (state = { isLoading: true, posts: [] }, action) => {
   switch (action.type) {
@@ -19,6 +19,8 @@ export const postReducer = (state = { isLoading: true, posts: [] }, action) => {
     case DELETE_POST:
       return { ...state, posts: state.posts.filter((post) => post.id !== action.payload.id) };
     case LIKE_POST:
+      return { ...state, posts: state.posts.map((post) => (post._id === action.payload._id ? action.payload : post)) };
+    case COMMENT:
       return { ...state, posts: state.posts.map((post) => (post._id === action.payload._id ? action.payload : post)) };
     default:
       return state;
